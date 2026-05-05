@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 19:05:57 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/05 11:02:28 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/05/05 11:17:01 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int ft_strcmp(char *str1, char *str2)
 }
 int is_positive_number(char *str)
 {
-    long result;
     int i;
 
     i = 0;
@@ -40,8 +39,7 @@ int is_positive_number(char *str)
             return (1);
         i++;
     }
-    result = atoi(str);
-    if (result <= 0)
+    if (atoi(str) <= 0)
         return 1;
     return (0);
     
