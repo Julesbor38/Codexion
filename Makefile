@@ -1,9 +1,9 @@
 NAME = codexion
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iinclude
+CFLAGS = -Wall -Wextra -Werror -pthread -Iinclude
 
-SRC = src/main.c src/parsing.c
+SRC = src/main.c src/parsing.c src/init.c src/threads.c src/utils.c
 INCLUDE = include
 
 OBJ = $(SRC:.c=.o)

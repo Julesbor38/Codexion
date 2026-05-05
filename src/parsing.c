@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 19:05:57 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/05 11:17:01 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/05/05 22:35:03 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ int ft_strcmp(char *str1, char *str2)
     int i;
 
     i = 0;
-    while(str1[i])
+    while(str1[i] && str2[i])
     {
         if (str1[i] != str2[i])
             return (str1[i] - str2[i]);
         i++;
     }
-    return (0);
+    return (str1[i] - str2[i]);
 }
 int is_positive_number(char *str)
 {
@@ -46,6 +46,11 @@ int is_positive_number(char *str)
 }
 int    fill_data(char **argv, t_data *data)
 {
+    struct timeval tv;
+    long start_time;
+    
+    gettimeofday(&tv, NULL);
+    start_time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
     data->nb_coders = atoi(argv[1]);
     data->time_to_burnout = atoi(argv[2]);
     data->time_to_compil = atoi(argv[3]);
@@ -53,6 +58,8 @@ int    fill_data(char **argv, t_data *data)
     data->time_to_refactor = atoi(argv[5]);
     data->required_compiles = atoi(argv[6]);
     data->dongle_cooldown = atoi(argv[7]);
+    data->start_time = start_time;
+    data->stop = 0;
     if(strcmp(argv[8], "fifo") == 0)
     {
             data->scheduler = FIFO;
@@ -90,6 +97,8 @@ int parse_args(int argc, char **argv, t_data *data)
 int def_args(int argc, char **argv)
 {
     t_data data;
+
+
 	if (parse_args(argc, argv, &data) != 0)
 	{
 		printf("Parsing failed\n");
@@ -104,6 +113,7 @@ int def_args(int argc, char **argv)
 	printf("time_to_refactor: %ld\n", data.time_to_refactor);
 	printf("required_compiles: %d\n", data.required_compiles);
 	printf("dongle_cooldown: %ld\n", data.dongle_cooldown);
+    printf("starting_time is %ld\n", data.start_time);
 	if (data.scheduler == FIFO)
 		printf("scheduler: FIFO\n");
 	else if (data.scheduler == EDF)
@@ -113,6 +123,5 @@ int def_args(int argc, char **argv)
         printf("Parsing failed\n");
         return (1);
     }
-
 	return (0);
 }
