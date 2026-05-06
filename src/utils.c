@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 13:35:28 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/05 22:39:10 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/05/07 00:45:22 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,21 @@ void log_action(t_coder *coder, char *str)
 
     if (strcmp(str, "is compiling") == 0)
         coder->last_compile_start = time_since_start;
+    if (coder->data->stop)
+        return;
+        
+}
+
+void free_all(t_data *data)
+{
+    int i;
+    
+    i = 0;
+    
+    while(i < data->nb_coders)
+    {
+        free(data->dongles[i].queue.arr);
+        i++;
+    }
+    free(data->dongles);
 }

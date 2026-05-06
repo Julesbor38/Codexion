@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 19:03:51 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/05 22:43:24 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/05/07 00:15:24 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ typedef struct s_dongle
     pthread_cond_t cond;
     long            cooldown_until;
     t_heap queue;
-
     long arrival_counter;
 } t_dongle;
 
@@ -100,4 +99,14 @@ void join_threads(t_data *data);
 // utils
 long timestamp_in_ms(t_coder *coder);
 void log_action(t_coder *coder, char *str);
+void free_all(t_data *data);
+
+//routines
+void compile_routine(t_coder *coder);
+void debug_routine(t_coder *coder);
+void refactor_routine(t_coder *coder);
+
+//monitor
+long timestamp_now_in_ms();
+void *monitor(void *arg);
 #endif

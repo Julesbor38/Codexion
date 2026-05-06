@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 11:37:38 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/05 22:42:39 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/05/07 00:02:51 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,17 @@
 
 void *routine(void *arg)
 {
-    t_coder *c = (t_coder *)arg;
+    t_coder *coder = (t_coder *)arg;
     int i= 0;
     
-    while ((!c->data->stop) && (c->compil_count < c->data->required_compiles))
+    while ((!coder->data->stop) && (coder->compil_count < coder->data->required_compiles))
     {
-        usleep(c->data->time_to_compil);
-         
-        log_action(c, "is compiling");
-        usleep(c->data->time_to_debug);
-        log_action(c, "is debugging");
-        usleep(c->data->time_to_refactor);
-        log_action(c, "is refactoring");
+        compile_routine(coder);
+        debug_routine(coder);
+        refactor_routine(coder);
         
         i++;
-        c->compil_count++;
+        coder->compil_count++;
     }
 
     return NULL;
