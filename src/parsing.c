@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 19:05:57 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/05 22:35:03 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/05/08 15:16:13 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int is_positive_number(char *str)
     int i;
 
     i = 0;
-    if ((strlen(str) >= 11 && ft_strcmp(str, "-2147483648") > 0 && str[0] == '-' )|| (strlen(str) >= 10 && ft_strcmp(str, "2147483647") > 0 && str[0] != '-'))
+    if ((strlen(str) == 10 && ft_strcmp(str, "2147483647") > 0 && str[0]) || (strlen(str) >= 11))
         return (1);
     while (str[i])
     {

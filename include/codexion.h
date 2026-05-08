@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 19:03:51 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/07 00:15:24 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/05/07 02:24:43 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_dongle
     long            cooldown_until;
     t_heap queue;
     long arrival_counter;
+    int in_use;
 } t_dongle;
 
 

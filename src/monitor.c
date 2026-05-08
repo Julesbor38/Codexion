@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 00:08:33 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/07 00:41:59 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/05/07 01:42:59 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void *monitor(void *arg)
             }
             i++;
         }
-        usleep(10000);
     }
     return (NULL);
 }
