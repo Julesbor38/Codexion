@@ -6,53 +6,58 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 11:37:38 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/09 13:36:27 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/05/09 16:50:00 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../include/codexion.h"
 
-
-
-void *routine(void *arg)
+void	*routine(void *arg)
 {
-    t_coder *coder = (t_coder *)arg;
-    
-    while ((!coder->data->stop) && (coder->compil_count < coder->data->required_compiles))
-    {
-        compile_routine(coder);
-        debug_routine(coder);
-        refactor_routine(coder);
-        
-        coder->compil_count++;
-    }
+	t_coder	*coder;
 
-    return NULL;
-}
-int create_threads(t_data *data)
-{
-    int i;
-
-    i = 0;
-    while(i < data->nb_coders)
-    {
-        if (pthread_create(&data->coders[i].thread, NULL, routine, &data->coders[i]) != 0)
-            return (-1);
-        i++;
-    }
-    return (0);
+	coder = (t_coder *)arg;
+	if (coder->data->nb_coders == 1)
+	{
+		log_action(coder, "has taken a dongle");
+		usleep(coder->data->time_to_burnout * 1000);
+		return (NULL);
+	}
+	while ((!coder->data->stop)
+		&& (coder->compil_count < coder->data->required_compiles))
+	{
+		compile_routine(coder);
+		debug_routine(coder);
+		refactor_routine(coder);
+		coder->compil_count++;
+	}
+	return (NULL);
 }
 
-void join_threads(t_data *data)
+int	create_threads(t_data *data)
 {
-    int i;
-    
-    i = 0;
-    while (i < data->nb_coders)
-    {
-        pthread_join(data->coders[i].thread, NULL);
-        i++;
-    }
-    free(data->coders);
+	int	i;
+
+	i = 0;
+	while (i < data->nb_coders)
+	{
+		if (pthread_create(&data->coders[i].thread, NULL, routine,
+				&data->coders[i]) != 0)
+			return (-1);
+		i++;
+	}
+	return (0);
+}
+
+void	join_threads(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->nb_coders)
+	{
+		pthread_join(data->coders[i].thread, NULL);
+		i++;
+	}
+	free(data->coders);
 }
