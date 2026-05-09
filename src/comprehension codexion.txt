@@ -1,0 +1,30 @@
+pthread:
+Le partage de mémoire entre threads est dangereux car plusieurs threads peuvent accéder et modifier une même donnée sans coordination.
+Comme les opérations ne sont pas atomiques, cela peut produire des résultats incohérents (race conditions).
+Il est donc nécessaire de synchroniser les accès à ces données via des mécanismes de protection (sections critiques), ce qui peut introduire un coût en performance.
+
+
+Lorsqu’un thread accède à une section critique, les autres threads doivent attendre.
+Cet accès n’est pas forcément géré en FIFO, car l’ordre dépend du système.
+Les threads en attente peuvent être bloqués (sans consommer de CPU) ou en attente active.
+Une mauvaise gestion peut réduire fortement les performances et annuler les bénéfices du multithreading.
+pthread_create - Create a new thread
+
+int pthread_create
+
+on cree nos thread qui sont egaux aux nombre de coders
+ils ont un time_to_burnout in ms c'est le temps maximum entre 2 compilations, max_time since beginning of last compilation, il faut donc faire un get time of day au debut de la compilation et si il arrive a  fin , pthread destroy
+
+time_to_compile, c; est le temps pendant lequel le thread va detenir les deux dongles actifs, le usleep entre les deux mutex
+time_to_debug, time spend to debugging?
+time to refactor : sleep afer debug before trying to compile 
+Numbers of compiles required, c'est le nombre de fois ou on va faire l'enchainement compile debug refactor pour chaque thread
+dongle cooldown, after mutex, time to be use ny another thread
+scheduler :
+fifo:
+on donne l'avantage au thread qui a commence sa derniere compilation il y a le plus longtemps
+edf:
+We search the coders with the minimal time_to_burnout, par exemple on est a +10 sec de la derniere compilation, et notre thread1 a un time to burnout a 11 sec et le 2 un time to burnout a 12 sec on va donc prendre le 1 mem si le premier a eu sa derniere compilation il y a plus longtemps
+techniquement ca reste pareil, mais si desynchronise ca change, ducoup pour gerer le flag scheduler on va faire:
+pour le fifo c'est simple, on va faire avec liste chainee, on ajoute a notre liste chainee l'id du dernier thread qui rentre e nfil d'attente et retirer le premier de la liste a chaque fois que l'un part en compilation etc...
+pour edf, on va trier par ordre de burnout avant de lancer compilation cela permetra de garantir l'entree en compilation du thread a prioriser

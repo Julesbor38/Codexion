@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/06 23:47:48 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/07 02:24:05 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/05/09 13:41:29 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,24 @@
 
 void compile_routine(t_coder *coder)
 {
-    
     if (coder->id % 2 == 0)
     {
-        pthread_mutex_lock(&coder->data->dongles[coder->right].mutex);
-        coder->data->dongles[coder->right].in_use = 1;
+        request_dongle(coder, &coder->data->dongles[coder->right]);
         log_action(coder, "has taken a dongle");
-        pthread_mutex_lock(&coder->data->dongles[coder->left].mutex);
-        coder->data->dongles[coder->left].in_use = 1;
+        request_dongle(coder, &coder->data->dongles[coder->left]);
         log_action(coder, "has taken a dongle");
     }
     else
     {
-        pthread_mutex_lock(&coder->data->dongles[coder->left].mutex);
-        coder->data->dongles[coder->left].in_use = 1;
+        request_dongle(coder, &coder->data->dongles[coder->left]);
         log_action(coder, "has taken a dongle");
-        pthread_mutex_lock(&coder->data->dongles[coder->right].mutex);
-        coder->data->dongles[coder->right].in_use = 1;
+        request_dongle(coder, &coder->data->dongles[coder->right]);
         log_action(coder, "has taken a dongle");
     }
     log_action(coder, "is compiling");
     usleep(coder->data->time_to_compil * 1000);
-        
-    pthread_mutex_unlock(&coder->data->dongles[coder->left].mutex);
-    coder->data->dongles[coder->left].in_use = 1;
-    pthread_mutex_unlock(&coder->data->dongles[coder->right].mutex);
-    coder->data->dongles[coder->right].in_use = 1;
+    release_dongle(coder, &coder->data->dongles[coder->left]);
+    release_dongle(coder, &coder->data->dongles[coder->right]);
 
 }
 void debug_routine(t_coder *coder)

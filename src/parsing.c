@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 19:05:57 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/08 15:16:13 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/05/08 22:50:36 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,12 @@ int    fill_data(char **argv, t_data *data)
     data->stop = 0;
     if(strcmp(argv[8], "fifo") == 0)
     {
-            data->scheduler = FIFO;
+            data->scheduler_type = FIFO;
             return 0;
     }
     else if(strcmp(argv[8], "edf") == 0)
     {
-        data->scheduler = EDF;
+        data->scheduler_type = EDF;
         return 0;
     }
     return (1);
@@ -114,9 +114,9 @@ int def_args(int argc, char **argv)
 	printf("required_compiles: %d\n", data.required_compiles);
 	printf("dongle_cooldown: %ld\n", data.dongle_cooldown);
     printf("starting_time is %ld\n", data.start_time);
-	if (data.scheduler == FIFO)
+	if (data.scheduler_type == FIFO)
 		printf("scheduler: FIFO\n");
-	else if (data.scheduler == EDF)
+	else if (data.scheduler_type == EDF)
 		printf("scheduler: EDF\n");
     else
     {

@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 11:37:38 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/07 00:02:51 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/05/09 13:36:27 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 void *routine(void *arg)
 {
     t_coder *coder = (t_coder *)arg;
-    int i= 0;
     
     while ((!coder->data->stop) && (coder->compil_count < coder->data->required_compiles))
     {
@@ -26,7 +25,6 @@ void *routine(void *arg)
         debug_routine(coder);
         refactor_routine(coder);
         
-        i++;
         coder->compil_count++;
     }
 
@@ -39,13 +37,6 @@ int create_threads(t_data *data)
     i = 0;
     while(i < data->nb_coders)
     {
-        data->coders[i].id = i + 1;
-        data->coders[i].data = data;
-        data ->coders[i].last_compile_start = data->start_time;
-        data->coders[i].compil_count = 0;
-        data->coders[i].left = i;
-        data->coders[i].right = (i + 1) % data->nb_coders;
-        
         if (pthread_create(&data->coders[i].thread, NULL, routine, &data->coders[i]) != 0)
             return (-1);
         i++;

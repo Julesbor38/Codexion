@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 19:03:51 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/07 02:24:43 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/05/09 13:41:15 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,21 @@ typedef enum e_scheduler
 {
     FIFO,
     EDF
-}   t_scheduler;
+}   t_scheduler_type;
+
+typedef struct s_request
+{
+    struct s_coder *coder;
+    long     priority;
+    long arrival_order;
+} t_request;
+
+typedef struct s_heap
+{
+    t_request *arr;
+    int size;
+    int capacity;
+} t_heap;
 
 typedef struct s_data
 {
@@ -34,14 +48,22 @@ typedef struct s_data
     long time_to_compil;
     long time_to_debug;
     long time_to_refactor;
+    
     int required_compiles;
+
+    
     long dongle_cooldown;
-    t_scheduler scheduler;
+    t_scheduler_type scheduler_type;
+    
     long start_time;
+    
     int  stop;
+    
     pthread_mutex_t print_mutex;
+    pthread_mutex_t     state_mutex;
+    
     struct s_coder *coders;
-    struct s_dongle *dongles;
+    struct s_dongle  *dongles;
 }   t_data;
 
 typedef struct s_coder
@@ -55,27 +77,14 @@ typedef struct s_coder
     t_data *data;
 }	t_coder;
 
-typedef struct s_request
-{
-    int         coder_id;
-    long        priority;
-} t_request;
-
-typedef struct s_heap
-{
-    t_request *arr;
-    int size;
-    int capacity;
-} t_heap;
-
 typedef struct s_dongle
 {
     pthread_mutex_t mutex;
     pthread_cond_t cond;
-    long            cooldown_until;
     t_heap queue;
+    int busy;
     long arrival_counter;
-    int in_use;
+    long cooldown_until;
 } t_dongle;
 
 
@@ -110,4 +119,8 @@ void refactor_routine(t_coder *coder);
 //monitor
 long timestamp_now_in_ms();
 void *monitor(void *arg);
+
+//scheduler
+void request_dongle(t_coder *coder, t_dongle *dongle);
+void release_dongle(t_coder *coder, t_dongle *dongle);
 #endif

@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 13:35:28 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/07 00:45:22 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/05/09 13:18:16 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,21 @@ void log_action(t_coder *coder, char *str)
 {
     long time_since_start;
     
-    time_since_start = timestamp_in_ms(coder);
-    
+    pthread_mutex_lock(&coder->data->state_mutex);
     pthread_mutex_lock(&coder->data->print_mutex);
-    printf("%ld %d %s\n", time_since_start, coder->id, str);
-    pthread_mutex_unlock(&coder->data->print_mutex);
-
+    if(coder->data->stop)
+    {
+        pthread_mutex_unlock(&coder->data->state_mutex);
+        pthread_mutex_unlock(&coder->data->print_mutex);
+        return;
+    }
+    time_since_start = timestamp_in_ms(coder);
     if (strcmp(str, "is compiling") == 0)
         coder->last_compile_start = time_since_start;
-    if (coder->data->stop)
-        return;
-        
+    
+    printf("%ld %d %s\n", time_since_start, coder->id, str);
+    pthread_mutex_unlock(&coder->data->print_mutex);
+    pthread_mutex_unlock(&coder->data->state_mutex);   
 }
 
 void free_all(t_data *data)
@@ -48,8 +52,10 @@ void free_all(t_data *data)
     
     while(i < data->nb_coders)
     {
-        free(data->dongles[i].queue.arr);
+        if(data->dongles[i].queue.arr)
+            free(data->dongles[i].queue.arr);
         i++;
     }
-    free(data->dongles);
+    if (data->dongles)
+        free(data->dongles);
 }
