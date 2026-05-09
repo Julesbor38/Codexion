@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 01:56:02 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/09 13:42:56 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/05/09 13:47:32 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void request_dongle(t_coder *coder, t_dongle *dongle)
 
     while (1)
     {
-        now = timestamp_now_in_ms();
+        now = timestamp_in_ms(coder);
 
         if (
             !dongle->busy
