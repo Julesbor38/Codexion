@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/09 14:41:14 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/18 15:39:02 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/05/19 01:32:45 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	request_dongles(t_coder *coder, t_dongle *left, t_dongle *right)
 	push_request(coder, left, req);
 	req.arrival_order = right->arrival_counter++;
 	push_request(coder, right, req);
-	
 	wait_for_turn(coder, left, right);
 	left->busy = 1;
 	right->busy = 1;

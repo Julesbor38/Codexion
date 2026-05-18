@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 19:05:57 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/18 17:12:17 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/05/19 01:31:24 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,27 +77,20 @@ int	fill_data(char **argv, t_data *data)
 int	parse_args(int argc, char **argv, t_data *data)
 {
 	int	i;
+	int	n;
 
 	i = 1;
 	if (argc != 9)
 	{
-		printf("Error, wrong number of arguments, it should be 9\n");
-		return (1);
+		return (printf("Error, wrong number of arguments\n"), 1);
 	}
-	while (i < 8)
+	while (i < 7)
 	{
-		if ((i == 1 && (atoi(argv[i]) <= 0 ))|| (i == 6 && (atoi(argv[i]) <= 0)))
-		{
-			printf("Error, argument"
-				" %d should only take numeric parameter and be > 0\n", i);
-			return (1);
-		}
-		if (is_positive_number(argv[i]) == 1)
-		{
-			printf("Error, argument"
-				" %d should only take numeric parameter and be >= 0\n", i);
-			return (1);
-		}
+		n = atoi(argv[i]);
+		if ((i == 1 && n <= 0) || (i == 6 && n <= 0))
+			return (printf("Error, arg %d must be > 0\n", i), 1);
+		if (is_positive_number(n) == 1)
+			return (printf("Error, arg %d must be >= 0\n", i), 1);
 		i++;
 	}
 	return (fill_data(argv, data));

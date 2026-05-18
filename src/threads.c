@@ -6,12 +6,13 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 11:37:38 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/18 16:33:36 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/05/19 01:33:05 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/codexion.h"
 #include <unistd.h>
+
 void	*routine(void *arg)
 {
 	t_coder	*coder;
@@ -65,15 +66,13 @@ void	join_threads(t_data *data)
 	}
 	free(data->coders);
 }
-int simulation_stopped(t_data *data)
+
+int	simulation_stopped(t_data *data)
 {
-    int stop;
+	int	stop;
 
-    pthread_mutex_lock(&data->state_mutex);
-
-    stop = data->stop;
-
-    pthread_mutex_unlock(&data->state_mutex);
-
-    return (stop);
+	pthread_mutex_lock(&data->state_mutex);
+	stop = data->stop;
+	pthread_mutex_unlock(&data->state_mutex);
+	return (stop);
 }
