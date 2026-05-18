@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 13:35:28 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/09 14:22:38 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/05/18 18:47:13 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,15 @@ void	log_action(t_coder *coder, char *str)
 {
 	long	time_since_start;
 
-	pthread_mutex_lock(&coder->data->state_mutex);
 	pthread_mutex_lock(&coder->data->print_mutex);
-	if (coder->data->stop)
+	if (simulation_stopped(coder->data))
 	{
-		pthread_mutex_unlock(&coder->data->state_mutex);
 		pthread_mutex_unlock(&coder->data->print_mutex);
 		return ;
 	}
 	time_since_start = timestamp_in_ms(coder);
-	if (strcmp(str, "is compiling") == 0)
-		coder->last_compile_start = time_since_start;
 	printf("%ld %d %s\n", time_since_start, coder->id, str);
 	pthread_mutex_unlock(&coder->data->print_mutex);
-	pthread_mutex_unlock(&coder->data->state_mutex);
 }
 
 void	free_all(t_data *data)

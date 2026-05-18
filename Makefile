@@ -1,20 +1,35 @@
 NAME = codexion
-
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -pthread -Iinclude -g3
+CFLAGS = -Wall -Wextra -Werror -pthread
 
-SRC = src/main.c src/parsing.c src/init.c src/threads.c src/utils.c src/routines.c src/monitor.c src/scheduler.c src/queue_scheduler.c src/utils_scheduler.c
-INCLUDE = include
+SRCDIR = src
+OBJDIR = objs
+DEPDIR = .deps
+INCDIR = includes
 
-OBJ = $(SRC:.c=.o)
+SRCS = main.c parsing.c init.c threads.c utils.c routines.c monitor.c scheduler.c queue_scheduler.c utils_scheduler.c
+OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
+
+INCLUDES = -I$(INCDIR)
+
+DEPFLAGS = -MMD -MP -MF $(DEPDIR)/$*.d
+
+.PHONY: all clean fclean re
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@mkdir -p $(OBJDIR)
+	@mkdir -p $(DEPDIR)
+	$(CC) $(CFLAGS) $(DEPFLAGS) $(INCLUDES) -c $< -o $@
 
-clean:
-	rm -f $(OBJ)
+-include $(addprefix $(DEPDIR)/, $(SRCS:.c=.d))
+
+clean: 
+	rm -rf $(DEPDIR)
+	rm -rf $(OBJDIR)
 
 fclean: clean
 	rm -f $(NAME)

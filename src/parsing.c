@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 19:05:57 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/09 14:21:57 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/05/18 17:12:17 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	is_positive_number(char *str)
 			return (1);
 		i++;
 	}
-	if (atoi(str) <= 0)
+	if (atoi(str) < 0)
 		return (1);
 	return (0);
 }
@@ -86,10 +86,16 @@ int	parse_args(int argc, char **argv, t_data *data)
 	}
 	while (i < 8)
 	{
-		if (is_positive_number(argv[i]) == 1)
+		if ((i == 1 && (atoi(argv[i]) <= 0 ))|| (i == 6 && (atoi(argv[i]) <= 0)))
 		{
 			printf("Error, argument"
 				" %d should only take numeric parameter and be > 0\n", i);
+			return (1);
+		}
+		if (is_positive_number(argv[i]) == 1)
+		{
+			printf("Error, argument"
+				" %d should only take numeric parameter and be >= 0\n", i);
 			return (1);
 		}
 		i++;

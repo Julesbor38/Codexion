@@ -6,22 +6,26 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/09 14:40:05 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/09 14:45:28 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/05/18 14:57:20 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/codexion.h"
 
-int	can_take_dongle(t_coder *coder,
-			t_dongle *dongle, long now)
+int	can_take_dongles(t_coder *coder,
+			t_dongle *left, t_dongle *right, long now)
 {
-	if (dongle->busy)
+	if (left->busy || right->busy)
 		return (0);
-	if (dongle->queue.size <= 0)
+	if (left->queue.size <= 0 | right->queue.size <= 0)
 		return (0);
-	if (dongle->queue.arr[0].coder != coder)
+	if (left->queue.arr[0].coder != coder)
 		return (0);
-	if (now < dongle->cooldown_until)
+	if (right->queue.arr[0].coder != coder)
+		return (0);
+	if (now < left->cooldown_until)
+		return (0);
+	if (now < right->cooldown_until)
 		return (0);
 	return (1);
 }
@@ -53,17 +57,19 @@ void	push_request(t_coder *coder,
 }
 
 void	wait_for_turn(t_coder *coder,
-			t_dongle *dongle)
+			t_dongle *left, t_dongle *right)
 {
 	long	now;
 
 	while (1)
 	{
 		now = timestamp_in_ms(coder);
-		if (can_take_dongle(coder, dongle, now))
+		if (can_take_dongles(coder, left, right, now))
 			break ;
-		pthread_mutex_unlock(&dongle->mutex);
+		pthread_mutex_unlock(&left->mutex);
+		pthread_mutex_unlock(&right->mutex);
 		usleep(1000);
-		pthread_mutex_lock(&dongle->mutex);
+		pthread_mutex_lock(&left->mutex);
+		pthread_mutex_lock(&right->mutex);
 	}
 }

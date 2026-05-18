@@ -6,12 +6,12 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 11:37:38 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/09 16:50:00 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/05/18 16:33:36 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/codexion.h"
-
+#include <unistd.h>
 void	*routine(void *arg)
 {
 	t_coder	*coder;
@@ -23,13 +23,17 @@ void	*routine(void *arg)
 		usleep(coder->data->time_to_burnout * 1000);
 		return (NULL);
 	}
-	while ((!coder->data->stop)
+	if (coder->id % 2 == 0)
+		usleep(1000);
+	while ((!simulation_stopped(coder->data))
 		&& (coder->compil_count < coder->data->required_compiles))
 	{
 		compile_routine(coder);
 		debug_routine(coder);
 		refactor_routine(coder);
+		pthread_mutex_lock(&coder->data->state_mutex);
 		coder->compil_count++;
+		pthread_mutex_unlock(&coder->data->state_mutex);
 	}
 	return (NULL);
 }
@@ -60,4 +64,16 @@ void	join_threads(t_data *data)
 		i++;
 	}
 	free(data->coders);
+}
+int simulation_stopped(t_data *data)
+{
+    int stop;
+
+    pthread_mutex_lock(&data->state_mutex);
+
+    stop = data->stop;
+
+    pthread_mutex_unlock(&data->state_mutex);
+
+    return (stop);
 }

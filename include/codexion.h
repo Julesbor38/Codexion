@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 19:03:51 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/09 14:44:39 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/05/18 16:34:21 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,43 +84,44 @@ typedef struct s_dongle
 	long				cooldown_until;
 }						t_dongle;
 
-// parsing
+/*parsing*/ 
 int						is_positive_number(char *str);
 int						fill_data(char **argv, t_data *data);
 int						parse_args(int argc, char **argv, t_data *data);
 
-// init
+/*init*/ 
 int						init_memory(t_data *data);
 int						init_mutex(t_data *data);
 int						init_dongles(t_data *data);
 void					init_coders(t_data *data);
 int						init_all(t_data *data);
-// threads
+/*threads*/
 void					*routine(void *arg);
 int						create_threads(t_data *data);
 void					join_threads(t_data *data);
-// utils
+int 					simulation_stopped(t_data *data);
+/*utils*/ 
 long					timestamp_in_ms(t_coder *coder);
 void					log_action(t_coder *coder, char *str);
 void					free_all(t_data *data);
 
-// routines
+/*routines*/ 
 void					compile_routine(t_coder *coder);
 void					debug_routine(t_coder *coder);
 void					refactor_routine(t_coder *coder);
 
-// monitor
+/*monitor*/ 
 void					*monitor(void *arg);
 
-// scheduler
-void					request_dongle(t_coder *coder, t_dongle *dongle);
-void					release_dongle(t_coder *coder, t_dongle *dongle);
-int						can_take_dongle(t_coder *coder, t_dongle *dongle,
-							long now);
+/*scheduler*/ 
+void					request_dongles(t_coder *coder, t_dongle *left, t_dongle *right);
+void					release_dongles(t_coder *coder, t_dongle *left, t_dongle *right);
+int						can_take_dongles(t_coder *coder, t_dongle *left,
+							t_dongle *right, long now);
 long					get_edf_priority(t_coder *coder);
 void					push_request(t_coder *coder, t_dongle *dongle,
 							t_request req);
-void					wait_for_turn(t_coder *coder, t_dongle *dongle);
+void					wait_for_turn(t_coder *coder, t_dongle *left, t_dongle *right);
 void					pop_front(t_dongle *dongle);
 void					enqueue_fifo(t_dongle *dongle, t_request req);
 void					enqueue_edf(t_dongle *dongle, t_request req);
