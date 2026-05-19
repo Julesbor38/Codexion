@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 19:05:57 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/19 01:31:24 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/05/19 11:38:52 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	parse_args(int argc, char **argv, t_data *data)
 		n = atoi(argv[i]);
 		if ((i == 1 && n <= 0) || (i == 6 && n <= 0))
 			return (printf("Error, arg %d must be > 0\n", i), 1);
-		if (is_positive_number(n) == 1)
+		if (is_positive_number(argv[i]) == 1)
 			return (printf("Error, arg %d must be >= 0\n", i), 1);
 		i++;
 	}

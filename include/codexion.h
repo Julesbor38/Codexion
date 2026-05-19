@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 19:03:51 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/18 23:01:27 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/05/19 12:01:38 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,18 +85,11 @@ typedef struct s_dongle
 }						t_dongle;
 
 /*parsing*/
-int						is_positive_number(char *str);
-int						fill_data(char **argv, t_data *data);
 int						parse_args(int argc, char **argv, t_data *data);
 
 /*init*/
-int						init_memory(t_data *data);
-int						init_mutex(t_data *data);
-int						init_dongles(t_data *data);
-void					init_coders(t_data *data);
 int						init_all(t_data *data);
 /*threads*/
-void					*routine(void *arg);
 int						create_threads(t_data *data);
 void					join_threads(t_data *data);
 int						simulation_stopped(t_data *data);
@@ -118,6 +111,8 @@ void					request_dongles(t_coder *coder, t_dongle *left,
 							t_dongle *right);
 void					release_dongles(t_coder *coder, t_dongle *left,
 							t_dongle *right);
+
+/*utils scheduler*/
 int						can_take_dongles(t_coder *coder, t_dongle *left,
 							t_dongle *right, long now);
 long					get_edf_priority(t_coder *coder);
@@ -125,7 +120,10 @@ void					push_request(t_coder *coder, t_dongle *dongle,
 							t_request req);
 void					wait_for_turn(t_coder *coder, t_dongle *left,
 							t_dongle *right);
+
+/*queue scheduler*/
 void					pop_front(t_dongle *dongle);
 void					enqueue_fifo(t_dongle *dongle, t_request req);
 void					enqueue_edf(t_dongle *dongle, t_request req);
+
 #endif
