@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 11:37:38 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/19 11:35:46 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/05/19 12:05:49 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,3 +76,19 @@ int	simulation_stopped(t_data *data)
 	pthread_mutex_unlock(&data->state_mutex);
 	return (stop);
 }
+
+void	log_action(t_coder *coder, char *str)
+{
+	long	time_since_start;
+
+	pthread_mutex_lock(&coder->data->print_mutex);
+	if (simulation_stopped(coder->data))
+	{
+		pthread_mutex_unlock(&coder->data->print_mutex);
+		return ;
+	}
+	time_since_start = timestamp_in_ms(coder);
+	printf("%ld %d %s\n", time_since_start, coder->id, str);
+	pthread_mutex_unlock(&coder->data->print_mutex);
+}
+

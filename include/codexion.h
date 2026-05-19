@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 19:03:51 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/19 12:01:38 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/05/19 12:06:47 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,11 @@ int						init_all(t_data *data);
 int						create_threads(t_data *data);
 void					join_threads(t_data *data);
 int						simulation_stopped(t_data *data);
+void					log_action(t_coder *coder, char *str);
 /*utils*/
 long					timestamp_in_ms(t_coder *coder);
-void					log_action(t_coder *coder, char *str);
 void					free_all(t_data *data);
+int						ft_strcmp(char *str1, char *str2);
 
 /*routines*/
 void					compile_routine(t_coder *coder);

@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 13:35:28 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/19 11:46:35 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/05/19 12:06:36 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,6 @@ long	timestamp_in_ms(t_coder *coder)
 	return (actual_time - coder->data->start_time);
 }
 
-void	log_action(t_coder *coder, char *str)
-{
-	long	time_since_start;
-
-	pthread_mutex_lock(&coder->data->print_mutex);
-	if (simulation_stopped(coder->data))
-	{
-		pthread_mutex_unlock(&coder->data->print_mutex);
-		return ;
-	}
-	time_since_start = timestamp_in_ms(coder);
-	printf("%ld %d %s\n", time_since_start, coder->id, str);
-	pthread_mutex_unlock(&coder->data->print_mutex);
-}
-
 void	free_all(t_data *data)
 {
 	int	i;
@@ -50,4 +35,18 @@ void	free_all(t_data *data)
 	}
 	if (data->dongles)
 		free(data->dongles);
+}
+
+int	ft_strcmp(char *str1, char *str2)
+{
+	int	i;
+
+	i = 0;
+	while (str1[i] && str2[i])
+	{
+		if (str1[i] != str2[i])
+			return (str1[i] - str2[i]);
+		i++;
+	}
+	return (str1[i] - str2[i]);
 }
