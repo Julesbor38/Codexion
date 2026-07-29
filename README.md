@@ -337,6 +337,6 @@ AI tools were used as technical assistance for:
 - discussing scheduler architecture
 - validating deadlock prevention strategies
 - clarifying POSIX mutex behavior
-- improving project modularization
+- improving project modularizationc
 
 All implementation, debugging, and final design decisions were made manually.
