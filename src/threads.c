@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 11:37:38 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/19 12:05:49 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/08/10 15:37:31 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,3 @@ void	log_action(t_coder *coder, char *str)
 	printf("%ld %d %s\n", time_since_start, coder->id, str);
 	pthread_mutex_unlock(&coder->data->print_mutex);
 }
-
