@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 00:08:33 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/09 14:48:26 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/08/10 16:23:59 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	*monitor(void *arg)
 	int		done_count;
 
 	data = (t_data *)arg;
-	while (!data->stop)
+	while (!simulation_stopped(data))
 	{
 		i = 0;
 		done_count = 0;
