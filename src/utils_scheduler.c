@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/09 14:40:05 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/08/10 11:48:58 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/08/10 15:19:11 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	can_take_dongles(t_coder *coder,
 {
 	if (left->busy || right->busy)
 		return (0);
-	if (left->queue.size <= 0 | right->queue.size <= 0)
+	if (left->queue.size <= 0 || right->queue.size <= 0)
 		return (0);
 	if (left->queue.arr[0].coder != coder)
 		return (0);
