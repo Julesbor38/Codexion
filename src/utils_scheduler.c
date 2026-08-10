@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/09 14:40:05 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/18 14:57:20 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/08/10 10:59:48 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	wait_for_turn(t_coder *coder,
 {
 	long	now;
 
-	while (1)
+	while (coder->data->stop != 1)
 	{
 		now = timestamp_in_ms(coder);
 		if (can_take_dongles(coder, left, right, now))
