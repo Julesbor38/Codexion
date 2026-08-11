@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 19:40:12 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/18 15:32:17 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/08/11 10:05:39 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,7 @@ int	init_memory(t_data *data)
 {
 	data->coders = malloc(sizeof(t_coder) * data->nb_coders);
 	if (!data->coders)
-	{
-		free_all(data);
 		return (1);
-	}
 	data->dongles = malloc(sizeof(t_dongle) * data->nb_coders);
 	if (!data->dongles)
 	{

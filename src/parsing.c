@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 19:05:57 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/08/11 09:14:15 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/08/11 10:02:58 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,15 @@ int	parse_args(int argc, char **argv, t_data *data)
 	i = 1;
 	if (argc != 9)
 	{
-		return (printf("Error, wrong number of arguments\n"), 1);
+		return (fprintf(stderr, "Error, wrong number of arguments\n"));
 	}
 	while (i <= 7)
 	{
 		n = atoi(argv[i]);
 		if ((i == 1 && n <= 0) || (i == 6 && n <= 0))
-			return (printf("Error, arg %d must be > 0\n", i), 1);
+			return (fprintf(stderr, "Error, arg %d must be > 0\n", i));
 		if (is_positive_number(argv[i]) == 1)
-			return (printf("Error, arg %d must be >= 0\n", i), 1);
+			return (fprintf(stderr, "Error, arg %d must be >= 0\n", i));
 		i++;
 	}
 	return (fill_data(argv, data));
