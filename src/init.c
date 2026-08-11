@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 19:40:12 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/08/11 10:56:37 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/08/11 11:12:13 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,17 @@
 
 int	init_memory(t_data *data)
 {
+	data->coders = NULL;
+	data->dongles = NULL;
+	
 	data->coders = malloc(sizeof(t_coder) * data->nb_coders);
 	if (!data->coders)
 		return (1);
 	data->dongles = malloc(sizeof(t_dongle) * data->nb_coders);
 	if (!data->dongles)
 	{
-		free_all(data);
+		free(data->coders);
+		data->coders = NULL;
 		return (1);
 	}
 	return (0);
@@ -47,12 +51,12 @@ int	init_dongles(t_data *data)
 		if (pthread_cond_init(&data->dongles[i].cond, NULL) != 0)
 			return (1);
 		data->dongles[i].queue.arr = malloc(sizeof(t_request)
-				* data->nb_coders);
+				* 2);
 		if (!data->dongles[i].queue.arr)
 			return (1);
 		data->dongles[i].busy = 0;
 		data->dongles[i].queue.size = 0;
-		data->dongles[i].queue.capacity = data->nb_coders;
+		data->dongles[i].queue.capacity = 2;
 		data->dongles[i].arrival_counter = 0;
 		data->dongles[i].cooldown_until = 0;
 		i++;
