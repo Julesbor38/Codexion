@@ -6,7 +6,7 @@
 
 ---
 
-# 📌 Description
+# Description
 
 **Codexion** is a multithreaded concurrency simulation written in C.  
 The project models a shared development workspace where multiple coders compete for a limited number of USB dongles in order to compile their code.
@@ -33,7 +33,7 @@ The entire architecture is built using POSIX threads (`pthread`), mutexes, and a
 
 ---
 
-# ⚙️ Compilation
+# Instructions
 
 The project is compiled using the provided `Makefile`.
 
@@ -49,7 +49,7 @@ Compilation flags:
 
 ---
 
-# ▶️ Usage
+#  Usage
 
 ```bash
 ./codexion number_of_coders \
@@ -64,7 +64,7 @@ Compilation flags:
 
 ---
 
-# 📥 Arguments
+# Arguments
 
 | Argument | Description |
 |---|---|
@@ -79,7 +79,7 @@ Compilation flags:
 
 ---
 
-# ✅ Constraints
+# Constraints
 
 - `number_of_coders > 0`
 - `number_of_compiles_required > 0`
@@ -92,7 +92,7 @@ Argument validation is fully handled during parsing.
 
 ---
 
-# 🧠 Project Architecture
+# Project Architecture
 
 ## Main Structures
 
@@ -140,7 +140,7 @@ Represents a scheduler request:
 
 ---
 
-# 🔄 Coder Lifecycle
+# Coder Lifecycle
 
 Each thread continuously performs the following routine:
 
@@ -158,7 +158,7 @@ The lifecycle is split into dedicated routines:
 
 ---
 
-# 🧵 Thread Management
+# Thread Management
 
 ## Thread Creation
 
@@ -172,7 +172,7 @@ An additional monitor thread supervises the global simulation state.
 
 ---
 
-# 🔒 Synchronization
+# Synchronization
 
 ## Mutex Usage
 
@@ -186,9 +186,9 @@ The project uses several mutexes:
 
 ---
 
-# 🛡️ Concurrency Safety
+# Concurrency Safety
 
-## ✅ Deadlock Prevention
+## Deadlock Prevention
 
 Dongles are always locked in a strict global order:
 
@@ -200,7 +200,7 @@ This resource hierarchy prevents circular waits and eliminates deadlocks.
 
 ---
 
-## ✅ Starvation Prevention
+## Starvation Prevention
 
 A custom scheduler manages dongle requests through a priority queue.
 
@@ -224,7 +224,7 @@ When priorities are identical, arrival order is used as a deterministic tie-brea
 
 ---
 
-# 📚 Custom Scheduler
+# Custom Scheduler
 
 The scheduler system is built around:
 
@@ -243,7 +243,7 @@ Main scheduler functions:
 
 ---
 
-# ⏱️ Burnout Detection
+# Burnout Detection
 
 A dedicated monitor thread continuously checks:
 
@@ -260,7 +260,7 @@ This guarantees precise burnout detection within the expected tolerance window.
 
 ---
 
-# 🧩 Dongle Cooldown System
+# Dongle Cooldown System
 
 After being released, each dongle enters a cooldown state:
 
@@ -272,7 +272,7 @@ The scheduler prevents any coder from reusing the dongle before the cooldown exp
 
 ---
 
-# 🗂️ File Organization
+# File Organization
 
 | File | Purpose |
 |---|---|
@@ -290,7 +290,7 @@ The scheduler prevents any coder from reusing the dongle before the cooldown exp
 
 ---
 
-# 🧪 Example
+# Example
 
 ```bash
 ./codexion 5 800 200 150 150 5 100 edf
@@ -306,7 +306,7 @@ Simulation with:
 
 ---
 
-# 📖 Concepts Covered
+# Concepts Covered
 
 This project explores:
 
@@ -321,7 +321,7 @@ This project explores:
 
 ---
 
-# 📚 Resources
+# Resources
 
 - POSIX Threads documentation
 - `pthread` manual pages
@@ -330,7 +330,7 @@ This project explores:
 
 ---
 
-# 🤖 AI Usage
+# AI Usage
 
 AI tools were used as technical assistance for:
 
