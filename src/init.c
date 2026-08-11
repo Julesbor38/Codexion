@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 19:40:12 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/08/11 11:12:13 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/08/11 11:13:16 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	init_memory(t_data *data)
 {
 	data->coders = NULL;
 	data->dongles = NULL;
-	
 	data->coders = malloc(sizeof(t_coder) * data->nb_coders);
 	if (!data->coders)
 		return (1);
@@ -50,8 +49,7 @@ int	init_dongles(t_data *data)
 			return (1);
 		if (pthread_cond_init(&data->dongles[i].cond, NULL) != 0)
 			return (1);
-		data->dongles[i].queue.arr = malloc(sizeof(t_request)
-				* 2);
+		data->dongles[i].queue.arr = malloc(sizeof(t_request) * 2);
 		if (!data->dongles[i].queue.arr)
 			return (1);
 		data->dongles[i].busy = 0;

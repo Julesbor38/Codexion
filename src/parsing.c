@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 19:05:57 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/08/11 10:55:04 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/08/11 11:13:32 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,6 @@ int	parse_args(int argc, char **argv, t_data *data)
 		i++;
 	}
 	if (strcmp(argv[8], "edf") && strcmp(argv[8], "fifo"))
-		return fprintf(stderr, "Error, arg 9 must be edf or fifo");
+		return (fprintf(stderr, "Error, arg 9 must be edf or fifo"));
 	return (fill_data(argv, data));
 }
