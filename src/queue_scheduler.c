@@ -6,7 +6,7 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/09 14:42:19 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/05/09 14:45:33 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/08/11 09:09:06 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,9 @@ void	enqueue_edf(t_dongle *dongle, t_request req)
 	if (dongle->queue.size >= dongle->queue.capacity)
 		return ;
 	i = dongle->queue.size;
-	while (i > 0
-		&& (dongle->queue.arr[i - 1].priority > req.priority
-			|| (
-				dongle->queue.arr[i - 1].priority == req.priority
-				&& dongle->queue.arr[i - 1].arrival_order
-				> req.arrival_order)))
+	while (i > 0 && (dongle->queue.arr[i - 1].priority > req.priority
+			|| (dongle->queue.arr[i - 1].priority == req.priority
+				&& dongle->queue.arr[i - 1].arrival_order > req.arrival_order)))
 	{
 		dongle->queue.arr[i] = dongle->queue.arr[i - 1];
 		i--;

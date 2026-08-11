@@ -6,14 +6,13 @@
 /*   By: jbordeli <jbordeli@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/09 14:40:05 by jbordeli          #+#    #+#             */
-/*   Updated: 2026/08/10 15:19:11 by jbordeli         ###   ########.fr       */
+/*   Updated: 2026/08/11 09:09:18 by jbordeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/codexion.h"
 
-int	can_take_dongles(t_coder *coder,
-			t_dongle *left, t_dongle *right, long now)
+int	can_take_dongles(t_coder *coder, t_dongle *left, t_dongle *right, long now)
 {
 	if (left->busy || right->busy)
 		return (0);
@@ -35,14 +34,12 @@ long	get_edf_priority(t_coder *coder)
 	long	priority;
 
 	pthread_mutex_lock(&coder->data->state_mutex);
-	priority = coder->last_compile_start
-		+ coder->data->time_to_burnout;
+	priority = coder->last_compile_start + coder->data->time_to_burnout;
 	pthread_mutex_unlock(&coder->data->state_mutex);
 	return (priority);
 }
 
-void	push_request(t_coder *coder,
-			t_dongle *dongle, t_request req)
+void	push_request(t_coder *coder, t_dongle *dongle, t_request req)
 {
 	if (coder->data->scheduler_type == FIFO)
 	{
@@ -56,8 +53,7 @@ void	push_request(t_coder *coder,
 	}
 }
 
-void	wait_for_turn(t_coder *coder,
-			t_dongle *left, t_dongle *right)
+void	wait_for_turn(t_coder *coder, t_dongle *left, t_dongle *right)
 {
 	long	now;
 
